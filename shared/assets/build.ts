@@ -9,9 +9,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import type { CatalogEntry } from './types.js';
 import type { FurnitureManifest, InheritedProps, ManifestGroup } from './manifestUtils.js';
 import { flattenManifest } from './manifestUtils.js';
+import type { CatalogEntry } from './types.js';
 
 // ── Furniture catalog ─────────────────────────────────────────────────────────
 

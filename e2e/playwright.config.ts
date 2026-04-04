@@ -1,6 +1,5 @@
-import path from 'path';
-
 import { defineConfig } from '@playwright/test';
+import path from 'path';
 
 const artifactsDir = path.join(__dirname, '../test-results/e2e');
 

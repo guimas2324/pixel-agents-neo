@@ -11,7 +11,7 @@
  * launch/cleanup is automatic and tests stay focused on assertions. See:
  * https://playwright.dev/docs/test-fixtures
  */
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 

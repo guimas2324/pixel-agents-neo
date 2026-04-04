@@ -1,5 +1,5 @@
-import { _electron as electron } from '@playwright/test';
 import type { ElectronApplication, Page } from '@playwright/test';
+import { _electron as electron } from '@playwright/test';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
