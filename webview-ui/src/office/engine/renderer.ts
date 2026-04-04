@@ -515,6 +515,49 @@ export function renderBubbles(
   }
 }
 
+/** Name label colors by rank */
+const RANK_COLORS: Record<string, string> = {
+  ceo: '#ffd700',
+  lead: '#4a9eff',
+  special: '#ff4444',
+};
+
+export function renderNameLabels(
+  ctx: CanvasRenderingContext2D,
+  characters: Character[],
+  offsetX: number,
+  offsetY: number,
+  zoom: number,
+): void {
+  for (const ch of characters) {
+    if (!ch.name) continue;
+
+    // Position below character feet
+    const sittingOffset = ch.state === CharacterState.TYPE ? CHARACTER_SITTING_OFFSET_PX : 0;
+    const labelX = Math.round(offsetX + ch.x * zoom);
+    const labelY = Math.round(offsetY + (ch.y + sittingOffset) * zoom + 2 * zoom);
+
+    const fontSize = Math.max(5, Math.round(5 * zoom));
+    ctx.font = `bold ${fontSize}px monospace`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+
+    const text = ch.name;
+    const metrics = ctx.measureText(text);
+    const padding = Math.round(1 * zoom);
+    const bgW = metrics.width + padding * 2;
+    const bgH = fontSize + padding * 2;
+
+    // Background rect
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+    ctx.fillRect(Math.round(labelX - bgW / 2), labelY, bgW, bgH);
+
+    // Text color based on rank
+    ctx.fillStyle = RANK_COLORS[ch.rank ?? ''] ?? '#ffffff';
+    ctx.fillText(text, labelX, labelY + padding);
+  }
+}
+
 export interface ButtonBounds {
   /** Center X in device pixels */
   cx: number;
@@ -617,6 +660,9 @@ export function renderFrame(
 
   // Speech bubbles (always on top of characters)
   renderBubbles(ctx, characters, offsetX, offsetY, zoom);
+
+  // Name labels (always on top)
+  renderNameLabels(ctx, characters, offsetX, offsetY, zoom);
 
   // Editor overlays
   if (editor) {

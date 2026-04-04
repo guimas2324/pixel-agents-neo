@@ -147,9 +147,19 @@ export function useExtensionMessages(
       } else if (msg.type === 'agentCreated') {
         const id = msg.id as number;
         const folderName = msg.folderName as string | undefined;
+        const name = msg.name as string | undefined;
+        const rank = msg.rank as string | undefined;
+        const hueShift = msg.hueShift as number | undefined;
+        const isVirtual = msg.isVirtual as boolean | undefined;
         setAgents((prev) => (prev.includes(id) ? prev : [...prev, id]));
-        setSelectedAgent(id);
-        os.addAgent(id, undefined, undefined, undefined, undefined, folderName);
+        if (!isVirtual) setSelectedAgent(id);
+        os.addAgent(id, undefined, hueShift, undefined, isVirtual, folderName);
+        // Set name and rank on the character after creation
+        const ch = os.characters.get(id);
+        if (ch) {
+          if (name) ch.name = name;
+          if (rank) ch.rank = rank;
+        }
         saveAgentSeats(os);
       } else if (msg.type === 'agentClosed') {
         const id = msg.id as number;

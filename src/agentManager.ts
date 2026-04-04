@@ -490,6 +490,37 @@ export function sendExistingAgents(
   // so that agentStatus/agentToolStart messages arrive after characters are created.
 }
 
+export function loadVirtualAgents(webview: vscode.Webview | undefined): void {
+  if (!webview) return;
+  const agentsFile = path.join(os.homedir(), '.altus-office', 'agents.json');
+  try {
+    if (!fs.existsSync(agentsFile)) {
+      console.log('[ALTUS Office] No virtual agents file found at', agentsFile);
+      return;
+    }
+    const raw = fs.readFileSync(agentsFile, 'utf-8');
+    const agents = JSON.parse(raw) as Array<{
+      id: number;
+      name: string;
+      rank: string;
+      hueShift: number;
+    }>;
+    console.log(`[ALTUS Office] Loading ${agents.length} virtual agents`);
+    for (const agent of agents) {
+      webview.postMessage({
+        type: 'agentCreated',
+        id: agent.id,
+        name: agent.name,
+        rank: agent.rank,
+        hueShift: agent.hueShift,
+        isVirtual: true,
+      });
+    }
+  } catch (err) {
+    console.error('[ALTUS Office] Error loading virtual agents:', err);
+  }
+}
+
 export function sendCurrentAgentStatuses(
   agents: Map<number, AgentState>,
   webview: vscode.Webview | undefined,

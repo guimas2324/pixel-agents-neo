@@ -1,7 +1,7 @@
 {
-  "name": "pixel-agents",
-  "displayName": "Pixel Agents",
-  "description": "Pixel art office where your Claude Code agents come to life as animated characters",
+  "name": "altus-office",
+  "displayName": "ALTUS Office",
+  "description": "Escritorio virtual pixel art da ALTUS SKY LAB",
   "version": "1.2.0",
   "publisher": "pablodelucca",
   "repository": {
@@ -21,29 +21,29 @@
   "contributes": {
     "commands": [
       {
-        "command": "pixel-agents.showPanel",
-        "title": "Pixel Agents: Show Panel"
+        "command": "altus-office.showPanel",
+        "title": "ALTUS Office: Show Panel"
       },
       {
-        "command": "pixel-agents.exportDefaultLayout",
-        "title": "Pixel Agents: Export Layout as Default"
+        "command": "altus-office.exportDefaultLayout",
+        "title": "ALTUS Office: Export Layout as Default"
       }
     ],
     "viewsContainers": {
       "panel": [
         {
-          "id": "pixel-agents-panel",
-          "title": "Pixel Agents",
+          "id": "altus-office-panel",
+          "title": "ALTUS Office",
           "icon": "$(window)"
         }
       ]
     },
     "views": {
-      "pixel-agents-panel": [
+      "altus-office-panel": [
         {
           "type": "webview",
-          "id": "pixel-agents.panelView",
-          "name": "Pixel Agents"
+          "id": "altus-office.panelView",
+          "name": "ALTUS Office"
         }
       ]
     }

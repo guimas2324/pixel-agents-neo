@@ -6,6 +6,7 @@ import * as vscode from 'vscode';
 import {
   getProjectDirPath,
   launchNewTerminal,
+  loadVirtualAgents,
   persistAgents,
   removeAgent,
   restoreAgents,
@@ -413,6 +414,8 @@ export class PixelAgentsViewProvider implements vscode.WebviewViewProvider {
           }
         })();
         sendExistingAgents(this.agents, this.context, this.webview);
+        // Load virtual ALTUS Office agents
+        loadVirtualAgents(this.webview);
       } else if (message.type === 'requestDiagnostics') {
         // Send connection diagnostics for all agents to the Debug View
         const diagnostics: Array<Record<string, unknown>> = [];

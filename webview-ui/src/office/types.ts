@@ -190,4 +190,8 @@ export interface Character {
   matrixEffectSeeds: number[];
   /** Workspace folder name (only set for multi-root workspaces) */
   folderName?: string;
+  /** Display name for the character */
+  name?: string;
+  /** Role rank: ceo, lead, dev, special */
+  rank?: string;
 }
