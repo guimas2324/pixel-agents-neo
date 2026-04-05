@@ -149,16 +149,21 @@ export function useExtensionMessages(
         const folderName = msg.folderName as string | undefined;
         const name = msg.name as string | undefined;
         const rank = msg.rank as string | undefined;
+        const dept = msg.dept as string | undefined;
+        const palette = msg.palette as number | undefined;
         const hueShift = msg.hueShift as number | undefined;
+        const restCol = msg.restCol as number | undefined;
+        const restRow = msg.restRow as number | undefined;
         const isVirtual = msg.isVirtual as boolean | undefined;
         setAgents((prev) => (prev.includes(id) ? prev : [...prev, id]));
         if (!isVirtual) setSelectedAgent(id);
-        os.addAgent(id, undefined, hueShift, undefined, isVirtual, folderName);
-        // Set name and rank on the character after creation
+        os.addAgent(id, palette, hueShift, undefined, isVirtual, folderName, restCol, restRow);
+        // Set name, rank, and dept on the character after creation
         const ch = os.characters.get(id);
         if (ch) {
           if (name) ch.name = name;
           if (rank) ch.rank = rank;
+          if (dept) ch.dept = dept;
         }
         saveAgentSeats(os);
       } else if (msg.type === 'agentClosed') {

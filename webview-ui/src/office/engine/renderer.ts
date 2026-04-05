@@ -558,6 +558,54 @@ export function renderNameLabels(
   }
 }
 
+/** Department label definitions */
+const DEPARTMENT_LABELS = [
+  { text: '\u{1F3E0} MINHA SALA', col: 3, row: 1.5, color: '#ffd700' },
+  { text: '\u{1F4BB} ALTUS CODE \u2014 15 Agentes', col: 20, row: 1.5, color: '#3b82f6' },
+  { text: '\u{1F4E2} ALTUS MARKETING \u2014 10 Agentes', col: 6, row: 17.5, color: '#a855f7' },
+  { text: '\u{1F91D} ALTUS SALES \u2014 7 Agentes', col: 28, row: 17.5, color: '#ef4444' },
+  { text: '\u2696\uFE0F ALTUS LEGAL \u2014 5 Agentes', col: 6, row: 31.5, color: '#06b6d4' },
+] as const;
+
+export function renderDepartmentLabels(
+  ctx: CanvasRenderingContext2D,
+  offsetX: number,
+  offsetY: number,
+  zoom: number,
+): void {
+  const s = TILE_SIZE * zoom;
+  const fontSize = Math.max(6, Math.round(7 * zoom));
+  ctx.font = `bold ${fontSize}px monospace`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+
+  for (const label of DEPARTMENT_LABELS) {
+    const x = offsetX + label.col * s;
+    const y = offsetY + label.row * s;
+
+    // Measure text for background
+    const metrics = ctx.measureText(label.text);
+    const padX = Math.round(3 * zoom);
+    const padY = Math.round(2 * zoom);
+    const bgW = metrics.width + padX * 2;
+    const bgH = fontSize + padY * 2;
+
+    // Semi-transparent dark banner background
+    ctx.save();
+    ctx.fillStyle = 'rgba(10, 10, 20, 0.7)';
+    ctx.fillRect(x - padX, y - bgH / 2, bgW, bgH);
+
+    // Colored left accent bar
+    ctx.fillStyle = label.color;
+    ctx.fillRect(x - padX, y - bgH / 2, Math.max(2, zoom), bgH);
+
+    // Text
+    ctx.fillStyle = label.color;
+    ctx.fillText(label.text, x, y);
+    ctx.restore();
+  }
+}
+
 export interface ButtonBounds {
   /** Center X in device pixels */
   cx: number;
@@ -634,6 +682,9 @@ export function renderFrame(
 
   // Draw tiles (floor + wall base color)
   renderTileGrid(ctx, tileMap, offsetX, offsetY, zoom, tileColors, layoutCols);
+
+  // Department labels (on top of floor, below everything else)
+  renderDepartmentLabels(ctx, offsetX, offsetY, zoom);
 
   // Seat indicators (below furniture/characters, on top of floor)
   if (selection) {

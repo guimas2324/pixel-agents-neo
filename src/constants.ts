@@ -32,6 +32,7 @@ export const BASH_COMMAND_DISPLAY_MAX_LENGTH = 30;
 export const TASK_DESCRIPTION_DISPLAY_MAX_LENGTH = 40;
 
 // ── User-Level Layout Persistence ─────────────────────────────
+export const ALTUS_OFFICE_DIR = '.altus-office';
 export const LAYOUT_FILE_DIR = '.pixel-agents';
 export const LAYOUT_FILE_NAME = 'layout.json';
 export const CONFIG_FILE_NAME = 'config.json';

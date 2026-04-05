@@ -503,7 +503,13 @@ export function loadVirtualAgents(webview: vscode.Webview | undefined): void {
       id: number;
       name: string;
       rank: string;
+      dept: string;
+      palette: number;
       hueShift: number;
+      deskCol: number;
+      deskRow: number;
+      restCol: number;
+      restRow: number;
     }>;
     console.log(`[ALTUS Office] Loading ${agents.length} virtual agents`);
     for (const agent of agents) {
@@ -512,7 +518,13 @@ export function loadVirtualAgents(webview: vscode.Webview | undefined): void {
         id: agent.id,
         name: agent.name,
         rank: agent.rank,
+        dept: agent.dept,
+        palette: agent.palette,
         hueShift: agent.hueShift,
+        deskCol: agent.deskCol,
+        deskRow: agent.deskRow,
+        restCol: agent.restCol,
+        restRow: agent.restRow,
         isVirtual: true,
       });
     }

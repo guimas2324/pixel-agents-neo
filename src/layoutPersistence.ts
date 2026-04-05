@@ -4,6 +4,7 @@ import * as path from 'path';
 import type { ExtensionContext } from 'vscode';
 
 import {
+  ALTUS_OFFICE_DIR,
   LAYOUT_FILE_DIR,
   LAYOUT_FILE_NAME,
   LAYOUT_FILE_POLL_INTERVAL_MS,
@@ -17,6 +18,13 @@ export interface LayoutWatcher {
 }
 
 function getLayoutFilePath(): string {
+  // ALTUS Office custom layout takes priority
+  const altusPath = path.join(os.homedir(), ALTUS_OFFICE_DIR, LAYOUT_FILE_NAME);
+  try {
+    if (fs.existsSync(altusPath)) return altusPath;
+  } catch {
+    /* fall through to default */
+  }
   return path.join(os.homedir(), LAYOUT_FILE_DIR, LAYOUT_FILE_NAME);
 }
 

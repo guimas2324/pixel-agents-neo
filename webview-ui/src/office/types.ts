@@ -194,4 +194,6 @@ export interface Character {
   name?: string;
   /** Role rank: ceo, lead, dev, special */
   rank?: string;
+  /** Department: code, marketing, sales, legal */
+  dept?: string;
 }
